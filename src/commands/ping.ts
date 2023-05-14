@@ -8,7 +8,7 @@ export default {
   execute(ctx: Context, interaction: APIInteraction): void {
     ctx.response.body = {
       type: InteractionResponseType.ChannelMessageWithSource,
-      data: { content: `Pongu! ${(Number(interaction.id) >> 22) + 1420070400000}ms` }
+      data: { content: `Pongu! ${Date.now() - ((Number(interaction.id) >> 22) + 1420070400000)}ms` }
     };
     ctx.response.type = "json";
     ctx.response.status = Status.OK;
