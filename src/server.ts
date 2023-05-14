@@ -41,7 +41,7 @@ router.post("/", async (ctx) => {
     ctx.response.status = statusCode;
     ctx.response.type = "json";
   } else {
-    const event = Object.values(events).map(evt => evt.default).find(evt => evt.type === InteractionType.Ping);
+    const event = Object.values(events).map(evt => evt.default).find(evt => evt.type === body.type);
     if (event) return await event.execute(ctx, body);
   }
 });
