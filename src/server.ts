@@ -1,8 +1,16 @@
-import { Application, Router } from "./deps.ts";
+import { Application, Router, sign } from "./deps.ts";
 
 const router = new Router();
 router.post("/", (ctx) => {
-  
+  const timestamp = ctx.request.headers.get("X-Signature-Timestamp");
+  const signature = ctx.request.headers.get("X-Signature-Ed25519");
+  const body = await ctx.request.body({ type: "text" }).value;
+
+  const valid = sign.detached.verify(
+    new TextEncoder().encode(timestamp + body),
+    hexEncode(signature),
+    hexEncode(Deno.env.get("DISCORD_PUBLIC_KEY"))
+  );
 });
 
 const app = new Application();
