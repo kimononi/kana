@@ -2,8 +2,8 @@ import { Application, Router, sign, Status, STATUS_TEXT } from "./deps.ts";
 
 const router = new Router();
 router.post("/", async (ctx) => {
-  const timestamp = ctx.request.headers.get("X-Signature-Timestamp");
-  const signature = ctx.request.headers.get("X-Signature-Ed25519");
+  const timestamp = ctx.request.headers.get("X-Signature-Timestamp")!;
+  const signature = ctx.request.headers.get("X-Signature-Ed25519")!;
   const body = await ctx.request.body({ type: "text" }).value;
 
   const valid = sign.detached.verify(
