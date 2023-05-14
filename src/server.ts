@@ -43,7 +43,7 @@ router.post("/", async (ctx) => {
   } else {
     const interaction = JSON.parse(body);
     const event = Object.values(events).find(evt => evt.default.type === interaction.type).default;
-    if (event) return await event.execute(ctx, body);
+    if (event) return await event.execute(ctx, interaction);
   }
 });
 
