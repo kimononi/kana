@@ -11,6 +11,6 @@ export default {
       data: { content: "Pongu!" }
     };
     ctx.response.type = "json";
-    ctx.status = Status.OK;
+    ctx.response.status = Status.OK;
   }
 }
