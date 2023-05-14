@@ -42,7 +42,7 @@ router.post("/", async (ctx) => {
     ctx.response.type = "json";
   } else {
     const event = Object.values(events).map(evt => evt.default).find(evt => evt.type === body.type);
-    console.log(event);
+    console.log(event, body);
     if (event) return await event.execute(ctx, body);
   }
 });
