@@ -5,7 +5,7 @@ import * as events from "./events/mod.ts";
 const router = new Router();
 
 router.get("/", async (ctx) => {
-  if (!ctx.request.url.includes(Deno.env.get("DENO_DEPLOYMENT_ID"))) {
+  if (!ctx.request.url.host.includes(Deno.env.get("DENO_DEPLOYMENT_ID"))) {
     const statusCode = Status.Unauthorized;
     ctx.response.body = { code: statusCode, message: STATUS_TEXT[`${statusCode}`] };
     ctx.response.status = statusCode;
