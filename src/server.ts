@@ -2,8 +2,8 @@ import { Application, Router, sign, Status, STATUS_TEXT } from "./deps.ts";
 
 const router = new Router();
 router.post("/", async (ctx) => {
-  const timestamp = ctx.request.headers.get("X-Signature-Timestamp")!;
-  const signature = ctx.request.headers.get("X-Signature-Ed25519")!;
+  const timestamp = ctx.request.headers.get("X-Signature-Timestamp");
+  const signature = ctx.request.headers.get("X-Signature-Ed25519");
   const body = await ctx.request.body({ type: "text" }).value;
 
   const valid = sign.detached.verify(
@@ -33,6 +33,6 @@ app.listen({ port: 8080 });
 function hexEncode(hex: string): Uint8Array {
   console.log(hex);
   return new Uint8Array(
-    hex.match(/.{1,2}/)!.map(ctx => parseInt(ctx, 16))
+    hex.match(/.{1,2}/g).map(ctx => parseInt(ctx, 16))
   );
 }
