@@ -7,7 +7,7 @@ export default {
   },
   execute(ctx: Context, interaction: APIInteraction): void {
     const ms = BigInt(interaction.id) >> 22n;
-    const timestamp = (new Date(Number(milliseconds) + 1420070400000))
+    const timestamp = (new Date(Number(ms) + 1420070400000))
     ctx.response.body = {
       type: InteractionResponseType.ChannelMessageWithSource,
       data: { content: `Pongu! ${Date.now() - time[Symbol.toPrimitive]('number')}ms` }
