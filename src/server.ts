@@ -1,7 +1,7 @@
 import { Application, Router, sign, Status, STATUS_TEXT } from "./deps.ts";
 
 const router = new Router();
-router.post("/", (ctx) => {
+router.post("/", async (ctx) => {
   const timestamp = ctx.request.headers.get("X-Signature-Timestamp");
   const signature = ctx.request.headers.get("X-Signature-Ed25519");
   const body = await ctx.request.body({ type: "text" }).value;
@@ -16,6 +16,11 @@ router.post("/", (ctx) => {
     const statusCode = Status.Unauthorized;
     ctx.response.body = STATUS_TEXT[statusCode];
     ctx.response.status = statusCode;
+  } else {
+    for await (const file of Deno.readDir("/src/src/events")) {
+      const event = (await import(`./events/${file.name}`)).default;
+      if (event.type === body.type) return await event.execute(ctx, body);
+    }
   }
 });
 
