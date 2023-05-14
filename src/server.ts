@@ -1,4 +1,4 @@
-import { Application, Router, sign } from "./deps.ts";
+import { Application, Router, sign, Status, STATUS_TEXT } from "./deps.ts";
 
 const router = new Router();
 router.post("/", (ctx) => {
@@ -11,6 +11,12 @@ router.post("/", (ctx) => {
     hexEncode(signature),
     hexEncode(Deno.env.get("DISCORD_PUBLIC_KEY"))
   );
+
+  if (!valid) {
+    const statusCode = Status.Unauthorized;
+    ctx.response.body = STATUS_TEXT[statusCode];
+    ctx.response.status = statusCode;
+  }
 });
 
 const app = new Application();
