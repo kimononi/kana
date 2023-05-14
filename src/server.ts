@@ -11,7 +11,7 @@ router.get("/", async (ctx) => {
     ctx.response.status = statusCode;
     ctx.response.type = "json";
   } else {
-    const response = await fetch(RouteBases + Routes.applicationCommands(Deno.env.get("DISCORD_ID")), {
+    const response = await fetch(RouteBases.api + Routes.applicationCommands(Deno.env.get("DISCORD_ID")), {
       method: "PUT",
       headers: { Authorization: `Bot ${Deno.env.get("DISCORD_TOKEN")}`, "Content-Type": "application/json" },
       body: JSON.stringify(Object.values(commands).map(cmd => cmd.default.data))
