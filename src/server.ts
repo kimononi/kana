@@ -18,7 +18,7 @@ router.post("/", async (ctx) => {
     ctx.response.body = STATUS_TEXT[statusCode];
     ctx.response.status = statusCode;
   } else {
-    const evts = Object.values(events);
+    const evts = Object.values(events).map(evt => evt.default);
     const event = evts.find(evt => evt.type === InteractionType.Ping);
 
     console.log(evts, event);
