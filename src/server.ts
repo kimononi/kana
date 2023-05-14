@@ -42,7 +42,7 @@ router.post("/", async (ctx) => {
     ctx.response.type = "json";
   } else {
     const interaction = JSON.parse(body);
-    const event = Object.values(events).find(evt => evt.default.type === interaction.type);
+    const event = Object.values(events).find(evt => evt.default.type === interaction.type).default;
     console.log(event, interaction);
     if (event) return await event.execute(ctx, body);
   }
