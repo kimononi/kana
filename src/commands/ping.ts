@@ -10,7 +10,7 @@ export default {
     const timestamp = (new Date(Number(ms) + 1420070400000))
     ctx.response.body = {
       type: InteractionResponseType.ChannelMessageWithSource,
-      data: { content: `Pongu! ${Date.now() - time[Symbol.toPrimitive]('number')}ms` }
+      data: { content: `Pongu! ${Date.now() - timestamp[Symbol.toPrimitive]('number')}ms` }
     };
     ctx.response.type = "json";
     ctx.response.status = Status.OK;
