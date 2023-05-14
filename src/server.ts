@@ -1,4 +1,5 @@
 import { Application, Router, sign, Status, STATUS_TEXT } from "./deps.ts";
+import * as events from "./events/mod.ts";
 
 const router = new Router();
 router.post("/", async (ctx) => {
@@ -17,10 +18,8 @@ router.post("/", async (ctx) => {
     ctx.response.body = STATUS_TEXT[statusCode];
     ctx.response.status = statusCode;
   } else {
-    for await (const file of Deno.readDir("/src/src/events")) {
-      const event = (await import(`./events/${file.name}`)).default;
-      if (event.type === body.type) return await event.execute(ctx, body);
-    }
+    const event = Object.values(events).find(evt => evt.type === InteractionType.Ping);
+    if (event) return await event.execute(ctx, body);
   }
 });
 
