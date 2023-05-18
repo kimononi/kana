@@ -18,7 +18,7 @@ router.get("/", async (ctx) => {
     });
     const result = await response.json();
 
-    ctx.response.body = result;
+    ctx.response.body = JSON.stringify(result, null, "  ");
     ctx.response.status = response.statusCode;
     ctx.response.type = "json";
   }
