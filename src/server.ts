@@ -1,6 +1,6 @@
 import { Application, InteractionType, Router, Routes, RouteBases, sign, Status, STATUS_TEXT } from "./deps.ts";
-import * as commands from "./commands/mod.ts";
-import * as events from "./events/mod.ts";
+import commands from "./commands/mod.ts";
+import events from "./events/mod.ts";
 
 const router = new Router();
 
