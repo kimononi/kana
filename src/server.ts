@@ -4,6 +4,7 @@ import * as routes from "./routes/mod.ts";
 const router = new Router();
 
 for (const { path, method, middleware } of Object.values(routes).map(ctx => ctx.default)) {
+  console.log(path, method, middleware);
   router.add(method, path, middleware);
 }
 
