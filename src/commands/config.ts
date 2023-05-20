@@ -3,12 +3,12 @@ import { APIChatInputApplicationCommandInteractionData, ApplicationCommandOption
 export default {
   data: {
     name: "config",
-    description: "Utak atik dulu g sih 🥦",
+    description: "🍥゛Kustomisasi pengaturan bot untuk server ini",
     dm_permission: false,
     options: [
       {
         name: "confess-channel",
-        description: "Atur konfigurasi channel confess yuk (*´ω｀*)",
+        description: "🍥゛Atur tempat confess di server ini",
         type: ApplicationCommandOptionType.Subcommand,
         options: [
           { name: "channel", description: "mau ditaruh di channel mana nih kack.", type: ApplicationCommandOptionType.Channel, channel_types: [ChannelType.GuildText] }
@@ -29,10 +29,7 @@ export default {
       };
     } else {
       ctx.response.body = {
-        type: InteractionResponseType.ChannelMessageWithSource,
-        data: {
-          content: "new feature coming soon (\\*´ω｀\\*)"
-        }
+        type: InteractionResponseType.DeferredChannelMessageWithSource
       }
     }
   }
