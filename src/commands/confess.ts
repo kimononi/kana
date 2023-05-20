@@ -2,9 +2,10 @@ import { APIUserApplicationCommandInteractionData, ApplicationCommandType, Conte
 
 export default {
   data: {
-    name: "confess",
+    name: "Confess",
     description: "",
-    type: ApplicationCommandType.User
+    type: ApplicationCommandType.User,
+    dm_permission: false
   },
   async execute(ctx: Context, interaction: APIUserApplicationCommandInteractionData): void {}
 }
