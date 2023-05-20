@@ -33,17 +33,16 @@ export default {
       const mongo = new MongoClient();
       await mongo.connect(Deno.env.get("MONGO_URI"));
     
-      const channels = interaction.data.resolved.channels;
-      return console.log(channels);
+      const confessChannel = interaction.data.options.find(opt => opt.name === "channel").value;
     
       const coll = mongo.database("guild").collection<Config>("configuration");
-      await coll.updateOne({ _id: interaction.guild_id }, { $set: { confessChannel: channel } }, { upsert: true });
+      await coll.updateOne({ _id: interaction.guild_id }, { $set: { confessChannel } }, { upsert: true });
     
       await fetch(RouteBases.api + Routes.webhookMessage(interaction.id, interaction.token, "@original"), {
         method: "PATCH",
         headers: { Authorization: `Bot ${Deno.env.get("DISCORD_TOKEN")}`, "Content-Type": "application/json" },
         body: JSON.stringify({
-          content: `sip! sekarang channel confess ny di <#${channel}> ya.`
+          content: `sip! sekarang channel confess ny di <#${confessChannel}> ya.`
         })
       })
     }
