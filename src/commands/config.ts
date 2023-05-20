@@ -28,6 +28,7 @@ export default {
         }
       };
     } else {
+      console.log(interaction);
       ctx.response.body = { type: InteractionResponseType.DeferredChannelMessageWithSource };
     
       const mongo = new MongoClient();
