@@ -1,4 +1,4 @@
-import { APIChatInputApplicationCommandInteractionData, ApplicationCommandOptionType, ChannelType, Context, InteractionResponseType, PermissionFlagsBits, Status } from "../deps.ts";
+import { APIChatInputApplicationCommandInteractionData, ApplicationCommandOptionType, ChannelType, Context, InteractionResponseType, MongoClient, PermissionFlagsBits, Snowflake, Status } from "../deps.ts";
 
 export default {
   data: {
@@ -11,7 +11,7 @@ export default {
         description: "🍥゛Atur tempat confess di server ini",
         type: ApplicationCommandOptionType.Subcommand,
         options: [
-          { name: "channel", description: "mau ditaruh di channel mana nih kack.", type: ApplicationCommandOptionType.Channel, channel_types: [ChannelType.GuildText] }
+          { name: "channel", description: "🍥゛Pilih channel untuk dijadikan mading", type: ApplicationCommandOptionType.Channel, channel_types: [ChannelType.GuildText] }
         ]
       }
     ]
@@ -28,9 +28,15 @@ export default {
         }
       };
     } else {
-      ctx.response.body = {
-        type: InteractionResponseType.DeferredChannelMessageWithSource
-      }
+      ctx.response.body = { type: InteractionResponseType.DeferredChannelMessageWithSource };
+    
+      const mongo = new MongoClient();
+      await mongo.connect(Deno.env.get("MONGO_URI"));
     }
   }
+}
+
+interface Config {
+  _id: Snowflake;
+  confessChannel: Snowflake;
 }
