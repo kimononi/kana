@@ -3,10 +3,9 @@ import * as routes from "./routes/mod.ts";
 
 const router = new Router();
 
-router.get("/", (ctx) => {
-  ctx.response.body = Date.now();
-  console.log(routes);
-});
+for (const { method, path, middleware } from Object.values(routes).map(ctx => ctx.default)) {
+  router.add(method, path, middleware);
+}
 
 const app = new Application();
 app.use(router.routes());
