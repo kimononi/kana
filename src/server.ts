@@ -1,4 +1,4 @@
-import { Application, InteractionType, MongoClient Router, Routes, RouteBases, sign, Status, STATUS_TEXT } from "./deps.ts";
+import { Application, InteractionType, MongoClient, Router, Routes, RouteBases, sign, Status, STATUS_TEXT } from "./deps.ts";
 import * as commands from "./commands/mod.ts";
 import * as events from "./events/mod.ts";
 
