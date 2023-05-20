@@ -28,7 +28,7 @@ export default {
         }
       };
     } else {
-      console.log(interaction);
+      console.log(interaction.token);
       ctx.response.body = { type: InteractionResponseType.DeferredChannelMessageWithSource };
     
       const mongo = new MongoClient();
