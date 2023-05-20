@@ -7,9 +7,6 @@ export default {
     dm_permission: false
   },
   async execute(ctx: Context, interaction: APIChatInputApplicationCommandInteractionData): Promise<void> {
-    ctx.response.status = StatusOK;
-    ctx.response.type = "json";
-    
     if ((interaction.member.permissions & PermissionFlagsBits.ManageGuild) !== PermissionFlagsBits.ManageGuild) {
       ctx.response.body = {
         type: InteractionResponseType.ChannelMessageWithSource,
