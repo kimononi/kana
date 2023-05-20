@@ -38,7 +38,7 @@ export default {
       const coll = mongo.database("guild").collection<Config>("configuration");
       await coll.updateOne({ _id: interaction.guild_id }, { $set: { confessChannel } }, { upsert: true });
     
-      const edited = await fetch(RouteBases.api + Routes.webhookMessage(interaction.id, interaction.token, "@original"), {
+      const edited = await fetch(RouteBases.api + Routes.webhookMessage(Deno.env.get("DISCORD_ID"), interaction.token, "@original"), {
         method: "PATCH",
         headers: { Authorization: `Bot ${Deno.env.get("DISCORD_TOKEN")}`, "Content-Type": "application/json" },
         body: JSON.stringify({
