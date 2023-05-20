@@ -1,4 +1,4 @@
-import { APIChatInputApplicationCommandInteractionData, ApplicationCommandOptionType, ChannelType, Context, InteractionResponseType, MongoClient, PermissionFlagsBits, Snowflake, Status } from "../deps.ts";
+import { APIChatInputApplicationCommandInteractionData, ApplicationCommandOptionType, ChannelType, Context, InteractionResponseType, MongoClient, PermissionFlagsBits, RouteBases, Routes, Snowflake, Status } from "../deps.ts";
 
 export default {
   data: {
@@ -36,6 +36,14 @@ export default {
       const channel = interaction.data.resolved.channels.next().value;
       const coll = mongo.database("guild").collection<Config>("configuration");
       await coll.updateOne({ _id: interaction.guild_id }, { $set: { confessChannel: channel } }, { upsert: true });
+    
+      await fetch(RouteBases.api + Routes.webhookMessage(interaction.id, interaction.token, "@original"), {
+        method: "PATCH",
+        headers: { Authorization: `Bot ${Deno.env.get("DISCORD_TOKEN")}`, "Content-Type": "application/json" },
+        body: JSON.stringify({
+          content: `sip! sekarang channel confess ny di <#${channel}> ya.`
+        })
+      })
     }
   }
 }
