@@ -4,7 +4,7 @@ import * as commands from "../commands/mod.ts";
 export default {
   path: "/",
   method: "GET"
-  async middlewares(ctx: Context): void {
+  async middleware(ctx: Context): Promise<void> {
     ctx.response.type = "json";
 
     if (!ctx.request.url.host.includes(Deno.env.get("DENO_DEPLOYMENT_ID"))) {
