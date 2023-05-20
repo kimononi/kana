@@ -10,7 +10,7 @@ export default {
     ctx.response.status = Status.OK;
     ctx.response.type = "json";
     
-    if ((BigInt(nteraction.member.permissions) & PermissionFlagsBits.ManageGuild) !== PermissionFlagsBits.ManageGuild) {
+    if ((BigInt(interaction.member.permissions) & PermissionFlagsBits.ManageGuild) !== PermissionFlagsBits.ManageGuild) {
       ctx.response.body = {
         type: InteractionResponseType.ChannelMessageWithSource,
         data: {
