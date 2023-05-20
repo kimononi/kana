@@ -4,7 +4,7 @@ import * as events from "../events/mod.ts";
 export default {
   path: "/",
   method: "POST",
-  async middleware(ctx: Context): Promise<any> {
+  middleware: async (ctx: Context) => Promise<any> {
     const timestamp = ctx.request.headers.get("X-Signature-Timestamp");
     const signature = ctx.request.headers.get("X-Signature-Ed25519");
     const body = await ctx.request.body({ type: "text" }).value;
