@@ -33,7 +33,7 @@ export default {
       const mongo = new MongoClient();
       await mongo.connect(Deno.env.get("MONGO_URI"));
     
-      const confessChannel = interaction.data.options.find(opt => opt.name === "channel").value;
+      const confessChannel = interaction.data.options[0].options[0].value;
     
       const coll = mongo.database("guild").collection<Config>("configuration");
       await coll.updateOne({ _id: interaction.guild_id }, { $set: { confessChannel } }, { upsert: true });
