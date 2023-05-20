@@ -3,14 +3,15 @@ import { APIInteraction, ApplicationCommandType, Context, InteractionResponseTyp
 export default {
   data: {
     name: "ping",
-    description: "Ping! Pongu!"
+    description: "🍥゛Ping! Pong!",
+    dm_permission: false
   },
   execute(ctx: Context, interaction: APIInteraction): void {
     const ms = BigInt(interaction.id) >> 22n;
     const timestamp = (new Date(Number(ms) + 1420070400000))
     ctx.response.body = {
       type: InteractionResponseType.ChannelMessageWithSource,
-      data: { content: `Pongu! ${Date.now() - timestamp[Symbol.toPrimitive]('number')}ms` }
+      data: { content: `🦦゛Pong! ${Date.now() - timestamp[Symbol.toPrimitive]('number')}ms` }
     };
     ctx.response.type = "json";
     ctx.response.status = Status.OK;

@@ -12,9 +12,3 @@ app.use(router.routes());
 app.use(router.allowedMethods());
 
 app.listen({ port: 8080 });
-
-function hexEncode(hex: string): Uint8Array {
-  return new Uint8Array(
-    hex.match(/.{1,2}/g).map(ctx => parseInt(ctx, 16))
-  );
-}
