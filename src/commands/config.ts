@@ -1,4 +1,4 @@
-import { APIChatInputApplicationCommandInteractionData, Context, InteractionResponseType, PermissionsFlagsBits, Status } from "../deps.ts";
+import { APIChatInputApplicationCommandInteractionData, Context, InteractionResponseType, PermissionFlagsBits, Status } from "../deps.ts";
 
 export default {
   data: {
@@ -10,7 +10,7 @@ export default {
     ctx.response.status = StatusOK;
     ctx.response.type = "json";
     
-    if ((interaction.member.permissions & PermissionsFlagsBits.ManageGuild) !== PermissionsFlagsBits.ManageGuild) {
+    if ((interaction.member.permissions & PermissionFlagsBits.ManageGuild) !== PermissionFlagsBits.ManageGuild) {
       ctx.response.body = {
         type: InteractionResponseType.ChannelMessageWithSource,
         data: {
