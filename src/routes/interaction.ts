@@ -2,8 +2,8 @@ import { Context, sign, Status, STATUS_TEXT } from "../deps.ts";
 import * as events from "../events/mod.ts";
 
 export default {
-  path: "/"
-  method: "POST"
+  path: "/",
+  method: "POST",
   async middleware(ctx: Context): Promise<any> {
     const timestamp = ctx.request.headers.get("X-Signature-Timestamp");
     const signature = ctx.request.headers.get("X-Signature-Ed25519");
