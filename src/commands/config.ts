@@ -28,9 +28,6 @@ export default {
         }
       };
     } else {
-      console.log(interaction.token);
-      ctx.response.body = { type: InteractionResponseType.DeferredChannelMessageWithSource };
-    
       const mongo = new MongoClient();
       await mongo.connect(Deno.env.get("MONGO_URI"));
     
@@ -39,14 +36,10 @@ export default {
       const coll = mongo.database("guild").collection<Config>("configuration");
       await coll.updateOne({ _id: interaction.guild_id }, { $set: { confessChannel } }, { upsert: true });
     
-      const edited = await fetch(RouteBases.api + Routes.webhookMessage(Deno.env.get("DISCORD_ID"), interaction.token, "@original"), {
-        method: "PATCH",
-        headers: { Authorization: `Bot ${Deno.env.get("DISCORD_TOKEN")}`, "Content-Type": "application/json" },
-        body: JSON.stringify({
-          content: `sip! sekarang channel confess ny di <#${confessChannel}> ya.`
-        })
-      });
-      console.log((await edited.json()))
+      ctx.response.body = {
+        type: InteractionResponseType.ChannelMessageWithSource,
+        data: { content: `sip! sekarang channel confess ny di <#${confessChannel}> ya.` }
+      };
     }
   }
 }
