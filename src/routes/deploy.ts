@@ -3,7 +3,7 @@ import * as commands from "../commands/mod.ts";
 
 export default {
   path: "/",
-  method: "GET"
+  method: "GET",
   async middleware(ctx: Context): Promise<void> {
     ctx.response.type = "json";
 
