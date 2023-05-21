@@ -1,4 +1,4 @@
-import { APIUserApplicationCommandInteractionData, ApplicationCommandType, ComponentType, Context, InteractionResponseType, MessageFlags, MongoClient, RouteBases, Routes, Snowflake, TextInputStyle } from "../deps.ts";
+import { APIUserApplicationCommandInteractionData, ApplicationCommandType, ComponentType, Context, InteractionResponseType, MessageFlags, MongoClient, Snowflake, Status, TextInputStyle } from "../deps.ts";
 
 export default {
   data: {
@@ -8,6 +8,9 @@ export default {
     dm_permission: false
   },
   async execute(ctx: Context, interaction: APIUserApplicationCommandInteractionData): Promise<void> {
+    ctx.response.type = "json";
+    ctx.response.status = Status.OK;
+    
     const mongo = new MongoClient();
     await mongo.connect(Deno.env.get("MONGO_URI"));
     
@@ -30,7 +33,7 @@ export default {
             {
               type: ComponentType.ActionRow,
               components: [
-                { type: ComponentType.TextInput, label: `🍥゛Monggo di isi surat e`, placeholder: `Apa yang mau kamu sampein ke {user}?`, style: TextInputStyle.Paragraph, custom_id: interaction.target_id }
+                { type: ComponentType.TextInput, label: `🍥゛Monggo di isi surat e`, placeholder: `Apa yang mau kamu sampein ke {user}?`, style: TextInputStyle.Paragraph, custom_id: interaction.data.target_id }
               ]
             }
           ]
