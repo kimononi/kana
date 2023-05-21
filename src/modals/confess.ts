@@ -3,7 +3,8 @@ import { APIModalSubmitInteraction, CDNRoutes, Context, MongoClient, RouteBases,
 export default {
   custom_id: "confess",
   async execute(ctx: Context, interaction: APIModalSubmitInteraction): Promise<void> {
-    const targetData = await fetch(RouteBases.api + Routes.user(interaction.data.components[0].components[0].custom_id), {
+    const input = interaction.data.components[0].components[0];
+    const targetData = await fetch(RouteBases.api + Routes.user(input.custom_id), {
       headers: { Authorization: `Bot ${Deno.env.get("DISCORD_TOKEN")}` }
     });
     const target = await targetData.json();
@@ -22,7 +23,7 @@ export default {
           {
             color: 0xFFFFFF,
             author: { name: `💌゛To: ${target.username + (target.discriminator === "0" ? "" : target.discriminator)}`, icon_url: avatar },
-            description: `{value}`
+            description: input.value
           }
         ]
       })
@@ -30,9 +31,9 @@ export default {
     const message = await messageData.json();
     
     ctx.response.body = {
-      type: InteractionResponseType.DeferredChannelMessageWithSource,
+      type: InteractionResponseType.ChannelMessageWithSource,
       data: {
-        flags: Message.Flags,
+        flags: MessageFlags.Ephemeral,
         content: `Surat mu udah dikirim ya. (https://discord.com/channels/${message.guild_id}/${message.channel_id}/${message.id})`
       }
     };
