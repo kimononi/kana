@@ -37,7 +37,7 @@ export default {
       type: InteractionResponseType.ChannelMessageWithSource,
       data: {
         flags: MessageFlags.Ephemeral,
-        content: `Surat mu udah dikirim ya. (https://discord.com/channels/${message.guild_id}/${message.channel_id}/${message.id})`
+        content: `Surat mu udah dikirim ya. (https://discord.com/channels/${interaction.guild_id}/${message.channel_id}/${message.id})`
       }
     };
   }
