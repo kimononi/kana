@@ -14,12 +14,12 @@ export default {
         code: ctx.request.url.searchParams.get("code")
       })
     });
-    const { access_token, refresh_token } = await auth.json();
+    const token = await auth.json();
     
-    ctx.cookies.set("access_token", access_token);
-    ctx.cookies.set("refresh_token", refresh_token);
+    ctx.cookies.set("access_token", token.access_token);
+    ctx.cookies.set("refresh_token", token.refresh_token);
     
-    ctx.response.body = { access_token, refresh_token };
+    ctx.response.body = token;
     ctx.response.type = "json";
     ctx.response.status = Status.OK;
   }
