@@ -33,7 +33,7 @@ export default {
             content: `🗿゛Kocak amat sih lu dek, confess ke bot`
           }
         };
-      } else if (target.id === interaction.member.id) {
+      } else if (target.id === interaction.member.user.id) {
         ctx.response.body = {
           type: InteractionResponseType.ChannelMessageWithSource,
           data: {
