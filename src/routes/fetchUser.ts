@@ -1,5 +1,4 @@
 import { Context, RouteBases, Routes, Status, STATUS_TEXT } from "../deps.ts";
-import { Context, RouteBases, Routes, Status, STATUS_TEXT } from "../deps.ts";
 
 export default {
   path: "/users/:userId",
