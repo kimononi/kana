@@ -24,24 +24,42 @@ export default {
         }
       };
     } else {
-      const handleRegex = /^[A-Za-z0-9_]{1,15}$/;
       const target = Object.values(interaction.data.resolved.users)[0];
-    
-      ctx.response.body = {
-        type: InteractionResponseType.Modal,
-        data: {
-          custom_id: "confess",
-          title: "🦦゛Tulis surat mu (*´ω｀*)",
-          components: [
-            {
-              type: ComponentType.ActionRow,
-              components: [
-                { type: ComponentType.TextInput, label: `🍥゛Monggo di isi surat e`, placeholder: `Apa yang mau kamu sampein ke @${handleRegex.test(target.username) ? target.username + (target.discriminator || "") : `user${target.id}`}?`, style: TextInputStyle.Paragraph, custom_id: interaction.data.target_id }
-              ]
-            }
-          ]
-        }
-      };
+      if (target.bot) {
+        ctx.response.body = {
+          type: InteractionResponseType.ChannelMessageWithSource,
+          data: {
+            flags: MessageFlags.Ephemeral,
+            content: `🗿゛Kocak amat sih lu dek, confess ke bot`
+          }
+        };
+      } else if (target.id === interaction.member.id) {
+        ctx.response.body = {
+          type: InteractionResponseType.ChannelMessageWithSource,
+          data: {
+            flags: MessageFlags.Ephemeral,
+            content: `🥺゛Kamu sendiri ya? sini aku peyuk..`
+          }
+        };
+      } else {
+        const handleRegex = /^[A-Za-z0-9_]{1,15}$/;
+      
+        ctx.response.body = {
+          type: InteractionResponseType.Modal,
+          data: {
+            custom_id: "confess",
+            title: "🦦゛Tulis surat mu (*´ω｀*)",
+            components: [
+              {
+                type: ComponentType.ActionRow,
+                components: [
+                  { type: ComponentType.TextInput, label: `🍥゛Monggo di isi surat e`, placeholder: `Apa yang mau kamu sampein ke @${handleRegex.test(target.username) ? target.username + (target.discriminator || "") : `user${target.id}`}?`, style: TextInputStyle.Paragraph, custom_id: interaction.data.target_id }
+                ]
+              }
+            ]
+          }
+        };
+      }
     }
   }
 }
