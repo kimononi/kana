@@ -1,4 +1,4 @@
-import { APIUserApplicationCommandInteractionData, ApplicationCommandType, Context, InteractionResponseType, MessageFlags, MongoClient, RouteBases, Routes, Snowflake } from "../deps.ts";
+import { APIUserApplicationCommandInteractionData, ApplicationCommandType, ComponentType, Context, InteractionResponseType, MessageFlags, MongoClient, RouteBases, Routes, Snowflake, TextInputStyle } from "../deps.ts";
 
 export default {
   data: {
@@ -21,20 +21,11 @@ export default {
         }
       };
     } else {
-      const confess = await fetch(RouteBases.api + Routes.channelMessages(data.confessChannel), {
-        method: "POST",
-        headers: { Authorization: `Bot ${Deno.env.get("DISCORD_TOKEN")}`, "Content-Type": "application/json"  },
-        body: JSON.stringify({
-          
-        })
-      })
-      console.log(confess);
-      console.log((await confess.json()))
       ctx.response.body = {
-        type: InteractionResponseType.ChannelMessageWithSource,
+        type: InteractionResponseType.Modal,
         data: {
-          flags: MessageFlags.Ephemeral,
-          content: `🍥゛Cek logs.`
+          custom_id: "confess",
+          title: "🦦゛"
         }
       };
     }
