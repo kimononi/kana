@@ -28,6 +28,14 @@ export default {
       })
     });
     const message = await messageData.json();
+    
+    ctx.response.body = {
+      type: InteractionResponseType.DeferredChannelMessageWithSource,
+      data: {
+        flags: Message.Flags,
+        content: `Surat mu udah dikirim ya. (https://discord.com/channels/${message.guild_id}/${message.channel_id}/${message.id})`
+      }
+    };
   }
 }
 
