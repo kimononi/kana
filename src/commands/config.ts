@@ -1,9 +1,10 @@
-import { APIChatInputApplicationCommandInteractionData, ApplicationCommandOptionType, ChannelType, Context, InteractionResponseType, MongoClient, PermissionFlagsBits, RouteBases, Routes, Snowflake, Status } from "../deps.ts";
+import { APIChatInputApplicationCommandInteractionData, ApplicationCommandType, ApplicationCommandOptionType, ChannelType, Context, InteractionResponseType, MongoClient, PermissionFlagsBits, RouteBases, Routes, Snowflake, Status } from "../deps.ts";
 
 export default {
   data: {
     name: "config",
     description: "🍥゛Kustomisasi pengaturan bot untuk server ini",
+    type: ApplicationCommandType.ChatInput,
     dm_permission: false,
     options: [
       {
