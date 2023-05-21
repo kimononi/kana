@@ -42,8 +42,6 @@ export default {
           }
         };
       } else {
-        const handleRegex = /^[A-Za-z0-9_]{1,15}$/;
-      
         ctx.response.body = {
           type: InteractionResponseType.Modal,
           data: {
@@ -53,7 +51,7 @@ export default {
               {
                 type: ComponentType.ActionRow,
                 components: [
-                  { type: ComponentType.TextInput, label: `🍥゛Monggo di isi surat e`, placeholder: `Apa yang mau kamu sampein ke @${handleRegex.test(target.username) ? target.username + (target.discriminator || "") : `user${target.id}`}?`, style: TextInputStyle.Paragraph, custom_id: interaction.data.target_id }
+                  { type: ComponentType.TextInput, label: `🍥゛Monggo di isi surat e`, placeholder: `Apa yang mau kamu sampein ke ${target.discriminator === "0" ? target.username : `${target.username}#${target.discriminator}`}?`, style: TextInputStyle.Paragraph, custom_id: interaction.data.target_id }
                 ]
               }
             ]
