@@ -1,4 +1,4 @@
-import { APIUserApplicationCommandInteractionData, ApplicationCommandType, Context, InteractionResponseType, MessageFlags, MongoClient, RouteBases, Routes } from "../deps.ts";
+import { APIUserApplicationCommandInteractionData, ApplicationCommandType, Context, InteractionResponseType, MessageFlags, MongoClient, RouteBases, Routes, Snowflake } from "../deps.ts";
 
 export default {
   data: {
@@ -11,7 +11,7 @@ export default {
     const mongo = new MongoClient();
     await mongo.connect(Deno.env.get("MONGO_URI"));
     
-    const data = mongo.database("guild").collection<Config>("config").findOne({ _id: interaction.guild_id });
+    const data = mongo.database("guild").collection<Config>("configuration").findOne({ _id: interaction.guild_id });
     if (!data) {
       ctx.response.body = {
         type: InteractionResponseType.ChannelMessageWithSource,
@@ -29,6 +29,7 @@ export default {
         })
       })
       console.log(confess);
+      console.log((await confess.json()))
       ctx.response.body = {
         type: InteractionResponseType.ChannelMessageWithSource,
         data: {
@@ -38,4 +39,9 @@ export default {
       };
     }
   }
+}
+
+interface Config {
+  _id: Snowflake;
+  confessChannel: Snowflake;
 }
