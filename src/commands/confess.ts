@@ -30,7 +30,7 @@ export default {
             {
               type: ComponentType.ActionRow,
               components: [
-                { type: ComponentType.TextInput, placeholder: `Apa yang mau kamu sampein ke {user}?`, style: TextInputStyle.Paragraph, custom_id: interaction.target_id }
+                { type: ComponentType.TextInput, label: `🍥゛Monggo di isi surat e`, placeholder: `Apa yang mau kamu sampein ke {user}?`, style: TextInputStyle.Paragraph, custom_id: interaction.target_id }
               ]
             }
           ]
