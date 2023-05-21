@@ -19,9 +19,11 @@ export default {
       headers: { Authorization: `Bot ${Deno.env.get("DISCORD_TOKEN")}`, "Content-Type": "application/json" },
       body: JSON.stringify({
         embeds: [
-          color: 0xFFFFFF,
-          author: { name: `💌゛To: ${target.username + (target.discriminator === "0" ? "" : target.discriminator)}`, icon_url: avatar },
-          description: `{value}`
+          {
+            color: 0xFFFFFF,
+            author: { name: `💌゛To: ${target.username + (target.discriminator === "0" ? "" : target.discriminator)}`, icon_url: avatar },
+            description: `{value}`
+          }
         ]
       })
     });
