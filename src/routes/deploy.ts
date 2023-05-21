@@ -2,7 +2,7 @@ import { Context, RouteBases, Routes, Status, STATUS_TEXT } from "../deps.ts";
 import * as commands from "../commands/mod.ts";
 
 export default {
-  path: "/",
+  path: "/deploy",
   method: "GET",
   async middleware(ctx: Context): Promise<void> {
     ctx.response.type = "json";
