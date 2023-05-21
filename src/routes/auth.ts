@@ -23,12 +23,9 @@ export default {
     });
     const user = await authenticatedUserData.json();
     
-    ctx.cookies.set("user_id", user.id);
     ctx.cookies.set("access_token", token.access_token);
     ctx.cookies.set("refresh_token", token.refresh_token);
     
-    ctx.response.body = "🦦゛Kembali ke page awal.."
-    ctx.response.type = "text";
-    ctx.response.status = Status.OK;
+    ctx.response.redirect(ctx.request.url.origin);
   }
 }
