@@ -13,7 +13,7 @@ export default {
     
     const data = await mongo.database("guild").collection<Config>("configuration").findOne({ _id: interaction.guild_id });
     
-    const avatar = RouteBases.cdn + (target.avatar ? CDNRoutes.userAvatar(target.id, target.avatar) : CDNRoutes.defaultUserAvatar(Number(BigInt(target.id) >> 22n) % 5));
+    const avatar = RouteBases.cdn + (target.avatar ? CDNRoutes.userAvatar(target.id, target.avatar, (target.avatar.startsWith("a_") ? "gif" : "png")) : CDNRoutes.defaultUserAvatar(Number(BigInt(target.id) >> 22n) % 5));
     const messageData = await fetch(RouteBases.api + Routes.channelMessages(data.confessChannel), {
       method: "POST",
       headers: { Authorization: `Bot ${Deno.env.get("DISCORD_TOKEN")}`, "Content-Type": "application/json" },
