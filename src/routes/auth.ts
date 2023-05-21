@@ -1,4 +1,4 @@
-import { Context, OAuth2Routes, Status } from "../deps.ts";
+import { Context, OAuth2Routes, RouteBases, Routes, Status } from "../deps.ts";
 
 export default {
   path: "/auth",
@@ -18,11 +18,17 @@ export default {
     });
     const token = await auth.json();
     
+    const authenticatedUserData = await fetch(RouteBases.api + Routes.user("@me"), {
+      headers: { Authorization: `Bearer ${token.access_token}` }
+    });
+    const user = await authenticatedUserData.json();
+    
+    ctx.cookies.set("user_id", user.id);
     ctx.cookies.set("access_token", token.access_token);
     ctx.cookies.set("refresh_token", token.refresh_token);
     
-    ctx.response.body = token;
-    ctx.response.type = "json";
+    ctx.response.body = "🦦゛Kembali ke page awal.."
+    ctx.response.type = "text";
     ctx.response.status = Status.OK;
   }
 }
