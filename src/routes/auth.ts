@@ -4,18 +4,16 @@ export default {
   path: "/auth",
   method: "GET",
   async middleware(ctx: Context): Promise<void> {
-    const body = {
-      client_id: Deno.env.get("DISCORD_ID"),
-      client_secret: Deno.env.get("DISCORD_SECRET"),
-      grant_type: "authorization_code",
-      code: ctx.request.url.searchParams.get("code")
-    };
-    console.log(body);
-    
+    const body = new URLSearchParams();
+    body.append("client_id", Deno.env.get("DISCORD_ID"));
+    body.append("client_secret", Deno.env.get("DISCORD_SECRET"));
+    body.append("grant_type", "authorization_code");
+    body.append("code", ctx.request.url.searchParams.get("code"));
+   
     const auth = await fetch(OAuth2Routes.tokenURL, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: JSON.stringify(body)
+      body
     });
     const token = await auth.json();
     
