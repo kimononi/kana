@@ -4,6 +4,7 @@ export default {
   data: {
     name: "ping",
     description: "🍥゛Ping! Pong!",
+    type: ApplicationCommandType.ChatInput,
     dm_permission: false
   },
   execute(ctx: Context, interaction: APIInteraction): void {
