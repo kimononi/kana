@@ -11,7 +11,7 @@ export default {
     const mongo = new MongoClient();
     await mongo.connect(Deno.env.get("MONGO_URI"));
     
-    const data = mongo.database("guild").collection<Config>("configuration").findOne({ _id: interaction.guild_id });
+    const data = await mongo.database("guild").collection<Config>("configuration").findOne({ _id: interaction.guild_id });
     if (!data) {
       ctx.response.body = {
         type: InteractionResponseType.ChannelMessageWithSource,
