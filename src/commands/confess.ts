@@ -11,8 +11,8 @@ export default {
     const mongo = new MongoClient();
     await mongo.connect(Deno.env.get("MONGO_URI"));
     
-    const confessChannel = mongo.database("guild").collection<Config>("config").findOne({ _id: interaction.guild_id });
-    if (!confessChannel) {
+    const data = mongo.database("guild").collection<Config>("config").findOne({ _id: interaction.guild_id });
+    if (!data) {
       ctx.response.body = {
         type: InteractionResponseType.ChannelMessageWithSource,
         data: {
@@ -21,12 +21,19 @@ export default {
         }
       };
     } else {
-      // const confessResult = await fetch(RouteBases.api + Routes.channelMessage());
+      const confess = await fetch(RouteBases.api + Routes.channelMessages(data.confessChannel), {
+        method: "POST",
+        headers: { Authorization: `Bot ${Deno.env.get("DISCORD_TOKEN")}`, "Content-Type": "application/json"  },
+        body: JSON.stringify({
+          
+        })
+      })
+      console.log(confess);
       ctx.response.body = {
         type: InteractionResponseType.ChannelMessageWithSource,
         data: {
           flags: MessageFlags.Ephemeral,
-          content: `🍥゛Ciailah, ngebet amat pengen confess, sabar dikit nape, lagi di bikin sistem nye`
+          content: `🍥゛Cek logs.`
         }
       };
     }
