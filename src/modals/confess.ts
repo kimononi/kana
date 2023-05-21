@@ -1,8 +1,11 @@
-import { APIModalSubmitInteraction, CDNRoutes, Context, MessageFlags, MongoClient, RouteBases, Routes, Snowflake } from "../deps.ts";
+import { APIModalSubmitInteraction, CDNRoutes, Context, MessageFlags, MongoClient, RouteBases, Routes, Snowflake, Status } from "../deps.ts";
 
 export default {
   custom_id: "confess",
   async execute(ctx: Context, interaction: APIModalSubmitInteraction): Promise<void> {
+    ctx.response.type = "json";
+    ctx.response.status = Status.OK;
+    
     const input = interaction.data.components[0].components[0];
     const targetData = await fetch(RouteBases.api + Routes.user(input.custom_id), {
       headers: { Authorization: `Bot ${Deno.env.get("DISCORD_TOKEN")}` }
