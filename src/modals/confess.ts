@@ -24,8 +24,8 @@ export default {
       body: JSON.stringify({
         embeds: [
           {
-            color: 0xFFFFFF,
-            author: { name: `💌゛To: ${target.username + (target.discriminator === "0" ? "" : target.discriminator)}`, icon_url: avatar },
+            color: 0xFEEB15,
+            author: { name: `💌゛To: ${target.discriminator === "0" ? target.username : `${target.username}#${target.discriminator}`} (${input.custom_id})`, icon_url: avatar },
             description: input.value
           }
         ]
