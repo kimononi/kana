@@ -1,4 +1,4 @@
-import { APIModalSubmitInteraction, CDNRoutes, Context, MessageFlags, MongoClient, RouteBases, Routes, Snowflake, Status } from "../deps.ts";
+import { APIModalSubmitInteraction, CDNRoutes, Context, InteractionResponseType, MessageFlags, MongoClient, RouteBases, Routes, Snowflake, Status } from "../deps.ts";
 
 export default {
   custom_id: "confess",
