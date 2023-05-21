@@ -9,6 +9,7 @@ export default {
     body.append("client_secret", Deno.env.get("DISCORD_SECRET"));
     body.append("grant_type", "authorization_code");
     body.append("code", ctx.request.url.searchParams.get("code"));
+    body.append("redirect_uri", ctx.request.url.origin + ctx.request.url.pathname);
    
     const auth = await fetch(OAuth2Routes.tokenURL, {
       method: "POST",
