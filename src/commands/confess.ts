@@ -25,7 +25,15 @@ export default {
         type: InteractionResponseType.Modal,
         data: {
           custom_id: "confess",
-          title: "🦦゛"
+          title: "🦦゛Tulis surat mu (*´ω｀*)",
+          components: [
+            {
+              type: ComponentType.ActionRow,
+              components: [
+                { type: ComponentType.TextInput, placeholder: `Apa yang mau kamu sampein ke {user}?`, style: TextInputStyle.Paragraph, custom_id: interaction.target_id }
+              ]
+            }
+          ]
         }
       };
     }
