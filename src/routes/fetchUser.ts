@@ -1,8 +1,7 @@
 import { Context, RouteBases, Routes, Status, STATUS_TEXT } from "../deps.ts";
-import * as commands from "../commands/mod.ts";
 
 export default {
-  path: "/deploy",
+  path: "/users/:userId",
   method: "GET",
   async middleware(ctx: Context): Promise<void> {
     ctx.response.type = "json";
@@ -12,10 +11,8 @@ export default {
       ctx.response.body = { code: statusCode, message: STATUS_TEXT[`${statusCode}`] };
       ctx.response.status = statusCode;
     } else {
-      const response = await fetch(RouteBases.api + Routes.applicationCommands(Deno.env.get("DISCORD_ID")), {
-        method: "PUT",
-        headers: { Authorization: `Bot ${Deno.env.get("DISCORD_TOKEN")}`, "content-type": "application/json" },
-        body: JSON.stringify(Object.values(commands).map(cmd => cmd.default.data))
+      const response = await fetch(RouteBases.api + Routes.user(ctx.params.userId), {
+        headers: { Authorization: `Bot ${Deno.env.get("DISCORD_TOKEN")}` }
       });
       const result = await response.json();
 
