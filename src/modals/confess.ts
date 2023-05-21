@@ -13,6 +13,7 @@ export default {
     
     const data = await mongo.database("guild").collection<Config>("configuration").findOne({ _id: interaction.guild_id });
     
+    const avatar = RouteBases.api + ();
     const messageData = await fetch(RouteBases.api + Routes.channelMessages(data.confessChannel), {
       method: "POST",
       headers: { Authorization: `Bot ${Deno.env.get("DISCORD_TOKEN")}`, "Content-Type": "application/json" },
