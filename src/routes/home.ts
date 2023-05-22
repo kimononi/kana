@@ -13,6 +13,7 @@ export default {
     redirectURI.searchParams.set("scope", scopes.join(" "));
     
     console.log(redirectURI);
+    console.log(ctx.cookies.entries());
     
     if (!ctx.cookies.has("access_token") || !ctx.cookies.has("refresh_token")) {
       ctx.response.redirect(redirectURI);
