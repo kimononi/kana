@@ -24,7 +24,7 @@ export default {
       });
       const data = await rawData.json();
     
-      if (data.status) {
+      if ("code" in data) {
         const body = new URLSearchParams();
         body.append("client_id", Deno.env.get("DISCORD_ID"));
         body.append("client_secret", Deno.env.get("DISCORD_SECRET"));
