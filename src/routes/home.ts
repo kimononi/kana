@@ -19,13 +19,29 @@ export default {
     if (!access_token || !refresh_token) {
       ctx.response.redirect(redirectURI);
     } else {
-      const user = await fetch(RouteBases.api + Routes.user("@me"), {
+      const rawData = await fetch(RouteBases.api + Routes.user("@me"), {
         headers: { Authorization: `Bearer ${access_token}` }
       });
-      const data = await user.json();
+      const data = await rawData.json();
     
-      ctx.response.body = data;
-      ctx.status = Status.OK;
+      if (data.status) {
+        const body = new URLSearchParams();
+        body.append("client_id", Deno.env.get("DISCORD_ID"));
+        body.append("client_secret", Deno.env.get("DISCORD_SECRET"));
+        body.append("grant_type", "refresh_token");
+        body.append("code", refresh_token);
+    
+        const refresh = await fetch(OAuth2Routes.tokenURL, {
+          method: "POST",
+          headers: { Authorization: `Bot ${Deno.env.get("DISCORD_TOKEN")}`, "Content-Type": "application/x-www-form-urlencoded" },
+          body
+        });
+    
+        ctx.response.body = await refresh.json();
+        ctx.status = Status.OK;
+      } else {
+        ctx.response.body = data;
+      }
     }
   }
 }
