@@ -12,6 +12,8 @@ export default {
     redirectURI.searchParams.set("response_type", "code");
     redirectURI.searchParams.set("scope", scopes.join(" "));
     
+    console.log(redirectURI);
+    
     if (!ctx.cookies.has("access_token") || !ctx.cookies.has("refresh_token")) {
       ctx.response.redirect(redirectURI);
     } else {
