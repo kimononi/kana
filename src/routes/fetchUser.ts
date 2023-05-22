@@ -2,6 +2,7 @@ import { Context, RouteBases, Routes, Status, STATUS_TEXT } from "../deps.ts";
 
 export default {
   path: "/users/:userId",
+  strict: false,
   method: "GET",
   async middleware(ctx: Context): Promise<void> {
     ctx.response.type = "json";
