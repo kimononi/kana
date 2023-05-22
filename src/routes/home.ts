@@ -29,7 +29,7 @@ export default {
         body.append("client_id", Deno.env.get("DISCORD_ID"));
         body.append("client_secret", Deno.env.get("DISCORD_SECRET"));
         body.append("grant_type", "refresh_token");
-        body.append("code", refresh_token);
+        body.append("refresh_token", refresh_token);
     
         const refresh = await fetch(OAuth2Routes.tokenURL, {
           method: "POST",
