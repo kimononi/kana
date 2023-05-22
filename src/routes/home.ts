@@ -2,6 +2,7 @@ import { Context, OAuth2Routes, OAuth2Scopes, RouteBases, Routes, Status } from 
 
 export default {
   path: "/",
+  strict: true,
   method: "GET",
   async middleware(ctx: Context): Promise<void> {
     const scopes = [OAuth2Scopes.Identify];
