@@ -12,10 +12,10 @@ export default {
     redirectURI.searchParams.set("response_type", "code");
     redirectURI.searchParams.set("scope", scopes.join(" "));
     
-    console.log(redirectURI);
-    console.log(ctx.cookies.entries());
+    const access_token = await ctx.cookies.get("access_token");
+    const refresh_token = await ctx.cookies.get("refresh_token");
     
-    if (!ctx.cookies.has("access_token") || !ctx.cookies.has("refresh_token")) {
+    if (!access_token || !refresh_token) {
       ctx.response.redirect(redirectURI);
     } else {
       
