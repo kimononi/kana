@@ -36,9 +36,11 @@ export default {
           headers: { Authorization: `Bot ${Deno.env.get("DISCORD_TOKEN")}`, "Content-Type": "application/x-www-form-urlencoded" },
           body
         });
+        const refreshData = await refresh.json();
     
-        ctx.response.body = await refresh.json();
-        ctx.status = Status.OK;
+        if ("error" in refreshData) 
+          ctx.response.redirect(redirectURI);
+          else ctx.response.body = refreshData;
       } else {
         ctx.response.body = data;
       }
