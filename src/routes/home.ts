@@ -1,4 +1,4 @@
-import { Context, OAuth2Routes, OAuth2Scopes } from "../deps.ts";
+import { Context, OAuth2Routes, OAuth2Scopes, RouteBases, Routes, Status } from "../deps.ts";
 
 export default {
   path: "/",
@@ -18,7 +18,13 @@ export default {
     if (!access_token || !refresh_token) {
       ctx.response.redirect(redirectURI);
     } else {
-      
+      const user = await fetch(RouteBases.api + Routes.user("@me"), {
+        headers: { Authorization: `Bearer ${access_token}` }
+      });
+      const data = await user.json();
+    
+      ctx.response.body = data;
+      ctx.status = Status.OK;
     }
   }
 }
