@@ -2,6 +2,7 @@ import { Context, OAuth2Routes, RouteBases, Routes, Status } from "../deps.ts";
 
 export default {
   path: "/auth",
+  strict: true,
   method: "GET",
   async middleware(ctx: Context): Promise<void> {
     const body = new URLSearchParams();
