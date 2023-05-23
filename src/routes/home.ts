@@ -26,6 +26,8 @@ interface ValidateResult {
 }
     
 function authorizeURL(ctx: Context): URL {
+  const scopes = [OAuth2Scopes.Identify];
+    
   const redirectURI = new URL(OAuth2Routes.authorizationURL);
   redirectURI.searchParams.set("client_id", Deno.env.get("DISCORD_ID"));
   redirectURI.searchParams.set("redirect_uri", ctx.request.url.origin + "/auth");
