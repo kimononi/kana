@@ -25,7 +25,7 @@ interface ValidateResult {
   output?: { code: Status, message: STATUS_TEXT };
 }
     
-function authorizeURL(ctx: Context): URL {
+exportfunction authorizeURL(ctx: Context): URL {
   const scopes = [OAuth2Scopes.Identify];
     
   const redirectURI = new URL(OAuth2Routes.authorizationURL);
