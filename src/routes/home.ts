@@ -10,8 +10,7 @@ export default {
     const auth = await authorize(ctx);
     if (!auth) {
       const redirectURI = authorizeURL(ctx);
-      console.log(redirectURI);
-      ctx.response.redirect(authorizeURL);
+      ctx.response.redirect(redirectURI);
     } else {
       ctx.response.body = JSON.stringify(auth.valid 
         ? Object.values(routes).filter(route => !route.default.strict).map(route => ctx.request.url.origin + route.default.path)
