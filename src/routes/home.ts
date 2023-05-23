@@ -9,7 +9,7 @@ export default {
   async middleware(ctx: Context): Promise<void> {
     ctx.response.type = "json";
     const auth = await authorize(ctx);
-    console.log(auth);
+    if (!auth) return ctx.response.redirect(authorizeURL);
     
     ctx.response.body = JSON.stringify(auth.valid 
       ? Object.values(routes).filter(route => !route.default.strict).map(route => ctx.request.url.origin + route.default.path)
@@ -22,20 +22,22 @@ interface ValidateResult {
   output?: { code: Status, message: STATUS_TEXT };
 }
     
+
+const redirectURI = new URL(OAuth2Routes.authorizationURL);
+redirectURI.searchParams.set("client_id", Deno.env.get("DISCORD_ID"));
+redirectURI.searchParams.set("redirect_uri", ctx.request.url.origin + "/auth");
+redirectURI.searchParams.set("response_type", "code");
+redirectURI.searchParams.set("scope", scopes.join(" "));
+    
+export const authorizeURL = redirectURI;
 export async function authorize(ctx: Context): Promise<ValidateResult | void> {
   const scopes = [OAuth2Scopes.Identify];
-    
-  const redirectURI = new URL(OAuth2Routes.authorizationURL);
-  redirectURI.searchParams.set("client_id", Deno.env.get("DISCORD_ID"));
-  redirectURI.searchParams.set("redirect_uri", ctx.request.url.origin + "/auth");
-  redirectURI.searchParams.set("response_type", "code");
-  redirectURI.searchParams.set("scope", scopes.join(" "));
-    
+  
   const access_token = await ctx.cookies.get("access_token");
   const refresh_token = await ctx.cookies.get("refresh_token");
     
   if (!access_token || !refresh_token) {
-    return ctx.response.redirect(redirectURI);
+    return;
   } else {
     const rawData = await fetch(RouteBases.api + Routes.user("@me"), {
       headers: { Authorization: `Bearer ${access_token}` }
@@ -57,7 +59,7 @@ export async function authorize(ctx: Context): Promise<ValidateResult | void> {
       const refreshData = await refresh.json();
     
       if ("error" in refreshData) 
-        return ctx.response.redirect(redirectURI);
+        return;
         else return validate(refreshData);
     } else {
       return validate(data);
