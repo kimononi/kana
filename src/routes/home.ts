@@ -10,7 +10,7 @@ export default {
   }
 }
 
-export async function vaildate(ctx: Context): Promise<Context> {
+export async function authorize(ctx: Context): Promise<Context> {
   const scopes = [OAuth2Scopes.Identify];
     
   const redirectURI = new URL(OAuth2Routes.authorizationURL);
@@ -51,4 +51,10 @@ export async function vaildate(ctx: Context): Promise<Context> {
       ctx.response.body = data;
     }
   }
+}
+
+async function validate(user: APIUser): <{valid: boolean, output?: any}> {
+  return config.devs.includes(user.id)
+    ? { valid: true }
+    : { valid: false, output: {code: Status.Unauthorized, message: STATUS_TEXT[`${Status.Unauthorized}`]} };
 }
