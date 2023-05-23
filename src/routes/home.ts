@@ -9,7 +9,7 @@ export default {
   async middleware(ctx: Context): Promise<void> {
     ctx.response.type = "json";
     const auth = await authorize(ctx);
-    return ctx.response.body = auth;
+    console.log(auth);
     
     ctx.response.body = JSON.stringify(auth.valid 
       ? Object.values(routes).filter(route => !route.default.strict).map(route => ctx.request.url.origin + route.default.path)
