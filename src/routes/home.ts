@@ -8,11 +8,10 @@ export default {
   method: "GET",
   async middleware(ctx: Context): Promise<void> {
     ctx.response.type = "json";
-    const valid = await authorize(ctx);
-    return ctx.response.body = valid;
+    const auth = await authorize(ctx);
     
-    ctx.response.body = JSON.stringify(valid 
-      ? output 
+    ctx.response.body = JSON.stringify(auth.valid 
+      ? auth.output 
       : Object.values(routes).filter(route => !route.strict).map(route => ctx.request.url.origin + route.path), null, " ");
   }
 }
