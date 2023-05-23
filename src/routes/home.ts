@@ -54,7 +54,7 @@ export async function authorize(ctx: Context): Promise<Context> {
   }
 }
 
-async function validate(user: APIUser): <{valid: boolean, output?: any}> {
+async function validate(user: APIUser): {valid: boolean, output?: any} {
   return config.devs.includes(user.id)
     ? { valid: true }
     : { valid: false, output: {code: Status.Unauthorized, message: STATUS_TEXT[`${Status.Unauthorized}`]} };
