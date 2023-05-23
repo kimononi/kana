@@ -1,4 +1,4 @@
-import { Context, OAuth2Routes, OAuth2Scopes, RouteBases, Routes, Status } from "../deps.ts";
+import { Context, OAuth2Routes, OAuth2Scopes, RouteBases, Routes, Status, STATUS_TEXT } from "../deps.ts";
 import * as routes from "./mod.ts";
 
 export default {
