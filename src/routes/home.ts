@@ -10,6 +10,7 @@ export default {
     ctx.response.type = "json";
     const auth = await authorize(ctx);
     if (!auth) {
+      const redirectURI = authorizeURL(ctx);
       ctx.response.redirect(authorizeURL);
     } else {
       ctx.response.body = JSON.stringify(auth.valid 
@@ -24,14 +25,16 @@ interface ValidateResult {
   output?: { code: Status, message: STATUS_TEXT };
 }
     
-
-const redirectURI = new URL(OAuth2Routes.authorizationURL);
-redirectURI.searchParams.set("client_id", Deno.env.get("DISCORD_ID"));
-redirectURI.searchParams.set("redirect_uri", ctx.request.url.origin + "/auth");
-redirectURI.searchParams.set("response_type", "code");
-redirectURI.searchParams.set("scope", scopes.join(" "));
+function authorizeURL(ctx: Context): URL {
+  const redirectURI = new URL(OAuth2Routes.authorizationURL);
+  redirectURI.searchParams.set("client_id", Deno.env.get("DISCORD_ID"));
+  redirectURI.searchParams.set("redirect_uri", ctx.request.url.origin + "/auth");
+  redirectURI.searchParams.set("response_type", "code");
+  redirectURI.searchParams.set("scope", scopes.join(" "));
     
-export const authorizeURL = redirectURI;
+  return redirectURI;
+};
+
 export async function authorize(ctx: Context): Promise<ValidateResult | void> {
   const scopes = [OAuth2Scopes.Identify];
   
