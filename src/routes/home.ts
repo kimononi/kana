@@ -11,8 +11,8 @@ export default {
     const auth = await authorize(ctx);
     
     ctx.response.body = JSON.stringify(auth.valid 
-      ? auth.output 
-      : Object.values(routes).filter(route => !route.strict).map(route => ctx.request.url.origin + route.path), null, " ");
+      ? Object.values(routes).filter(route => !route.strict).map(route => ctx.request.url.origin + route.path)
+      : auth.output, null, " ");
   }
 }
 
