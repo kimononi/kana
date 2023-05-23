@@ -7,11 +7,21 @@ export default {
   strict: true,
   method: "GET",
   async middleware(ctx: Context): Promise<void> {
+    ctx.response.type = "json";
+    const { valid, output } = await authorize(ctx);
     
+    ctx.response.body = JSON.stringify(valid 
+      ? output 
+      : Object.values(routes).filter(route => !route.strict).map(route => ctx.request.url.origin + route.path), null, " ");
   }
 }
 
-export async function authorize(ctx: Context): Promise<Context> {
+interface ValidateResult {
+  valid: boolean;
+  output?: { code: Status, message: STATUS_TEXT };
+}
+    
+export async function authorize(ctx: Context): Promise<ValidateResult> {
   const scopes = [OAuth2Scopes.Identify];
     
   const redirectURI = new URL(OAuth2Routes.authorizationURL);
@@ -47,14 +57,14 @@ export async function authorize(ctx: Context): Promise<Context> {
     
       if ("error" in refreshData) 
         ctx.response.redirect(redirectURI);
-        else ctx.response.body = refreshData;
+        else return validate(refreshData);
     } else {
-      ctx.response.body = data;
+      return validate(data);
     }
   }
 }
 
-async function validate(user: APIUser): {valid: boolean, output?: any} {
+async function validate(user: APIUser): ValidateResult {
   return config.devs.includes(user.id)
     ? { valid: true }
     : { valid: false, output: {code: Status.Unauthorized, message: STATUS_TEXT[`${Status.Unauthorized}`]} };
