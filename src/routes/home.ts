@@ -9,7 +9,7 @@ export default {
   async middleware(ctx: Context): Promise<void> {
     const auth = await authorize(ctx);
     if (!auth) {
-      const redirectURI = authorizeURL(ctx);
+      const redirectURI = authorizeURL(ctx.request.url);
       ctx.response.redirect(redirectURI);
     } else {
       ctx.response.body = JSON.stringify(auth.valid 
@@ -24,12 +24,12 @@ interface ValidateResult {
   output?: { code: Status, message: STATUS_TEXT };
 }
     
-export function authorizeURL(ctx: Context): URL {
+export function authorizeURL(url: URL): URL {
   const scopes = [OAuth2Scopes.Identify];
     
   const redirectURI = new URL(OAuth2Routes.authorizationURL);
   redirectURI.searchParams.set("client_id", Deno.env.get("DISCORD_ID"));
-  redirectURI.searchParams.set("redirect_uri", ctx.request.url.origin + "/auth");
+  redirectURI.searchParams.set("redirect_uri", url.origin + "/auth");
   redirectURI.searchParams.set("response_type", "code");
   redirectURI.searchParams.set("scope", scopes.join(" "));
     
