@@ -3,6 +3,7 @@ import * as events from "../events/mod.ts";
 
 export default {
   path: "/",
+  strict: true,
   method: "POST",
   async middleware(ctx: Context): Promise<any> {
     const timestamp = ctx.request.headers.get("X-Signature-Timestamp");
