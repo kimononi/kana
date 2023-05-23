@@ -1,4 +1,5 @@
 import { Context, OAuth2Routes, OAuth2Scopes, RouteBases, Routes, Status } from "../deps.ts";
+import config from "../config.json" assert { type: "json" };
 import * as routes from "./mod.ts";
 
 export default {
