@@ -1,6 +1,6 @@
 import { Context, RouteBases, Routes, Status, STATUS_TEXT } from "../deps.ts";
 import * as commands from "../commands/mod.ts";
-import { authorize } from "./home.ts";
+import { authorize, authorizeURL } from "./home.ts";
 
 export default {
   path: "/deploy",
@@ -9,8 +9,10 @@ export default {
   async middleware(ctx: Context): Promise<void> {
     ctx.response.type = "json";
     const auth = await authorize(ctx);
-
-    if (!auth.valid) {
+    if (!auth) {
+      const redirectURI = authorizeURL(ctx.request.url);
+      ctx.response.redirect(redirectURI);
+    } else if (!auth.valid) {
       ctx.response.body = auth.output;
     } else {
       const response = await fetch(RouteBases.api + Routes.applicationCommands(Deno.env.get("DISCORD_ID")), {
