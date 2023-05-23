@@ -6,7 +6,7 @@ export default {
   strict: true,
   method: "GET",
   async middleware(ctx: Context): Promise<void> {
-    const 
+    
   }
 }
 
