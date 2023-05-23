@@ -22,7 +22,7 @@ interface ValidateResult {
   output?: { code: Status, message: STATUS_TEXT };
 }
     
-export async function authorize(ctx: Context): Promise<ValidateResult> {
+export async function authorize(ctx: Context): Promise<ValidateResult | void> {
   const scopes = [OAuth2Scopes.Identify];
     
   const redirectURI = new URL(OAuth2Routes.authorizationURL);
@@ -35,7 +35,7 @@ export async function authorize(ctx: Context): Promise<ValidateResult> {
   const refresh_token = await ctx.cookies.get("refresh_token");
     
   if (!access_token || !refresh_token) {
-    ctx.response.redirect(redirectURI);
+    return ctx.response.redirect(redirectURI);
   } else {
     const rawData = await fetch(RouteBases.api + Routes.user("@me"), {
       headers: { Authorization: `Bearer ${access_token}` }
@@ -57,7 +57,7 @@ export async function authorize(ctx: Context): Promise<ValidateResult> {
       const refreshData = await refresh.json();
     
       if ("error" in refreshData) 
-        ctx.response.redirect(redirectURI);
+        return ctx.response.redirect(redirectURI);
         else return validate(refreshData);
     } else {
       return validate(data);
