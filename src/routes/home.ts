@@ -8,7 +8,8 @@ export default {
   method: "GET",
   async middleware(ctx: Context): Promise<void> {
     ctx.response.type = "json";
-    const { valid, output } = await authorize(ctx);
+    const valid = await authorize(ctx);
+    return ctx.response.body = valid;
     
     ctx.response.body = JSON.stringify(valid 
       ? output 
@@ -64,7 +65,7 @@ export async function authorize(ctx: Context): Promise<ValidateResult> {
   }
 }
 
-async function validate(user: APIUser): ValidateResult {
+function validate(user: APIUser): ValidateResult {
   return config.devs.includes(user.id)
     ? { valid: true }
     : { valid: false, output: {code: Status.Unauthorized, message: STATUS_TEXT[`${Status.Unauthorized}`]} };
