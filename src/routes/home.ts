@@ -9,11 +9,13 @@ export default {
   async middleware(ctx: Context): Promise<void> {
     ctx.response.type = "json";
     const auth = await authorize(ctx);
-    if (!auth) return ctx.response.redirect(authorizeURL);
-    
-    ctx.response.body = JSON.stringify(auth.valid 
-      ? Object.values(routes).filter(route => !route.default.strict).map(route => ctx.request.url.origin + route.default.path)
-      : auth.output, null, " ");
+    if (!auth) {
+      ctx.response.redirect(authorizeURL);
+    } else {
+      ctx.response.body = JSON.stringify(auth.valid 
+        ? Object.values(routes).filter(route => !route.default.strict).map(route => ctx.request.url.origin + route.default.path)
+        : auth.output, null, " ");
+    }
   }
 }
 
