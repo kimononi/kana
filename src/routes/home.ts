@@ -1,5 +1,4 @@
 import { Context, OAuth2Routes, OAuth2Scopes, RouteBases, Routes, Status } from "../deps.ts";
-import config from "../config.json" assert { type: "json" };
 import * as routes from "./mod.ts";
 
 export default {
@@ -23,19 +22,8 @@ export async function vaildate(ctx: Context): Promise<Context> {
   const access_token = await ctx.cookies.get("access_token");
   const refresh_token = await ctx.cookies.get("refresh_token");
     
-  const unauthorized = {
-    code: Status.Unauthorized,
-    message: STATUS_TEXT[`${Status.Unauthorized}`]
-  };
-    
   if (!access_token || !refresh_token) {
-    if (ctx.request.url.pathname === "/")
-      ctx.response.redirect(redirectURI);
-      else {
-      ctx.response.status = unauthorized.code;
-      ctx.response.body = unauthorized;
-      ctx.response.type = "json";
-    }
+    ctx.response.redirect(redirectURI);
   } else {
     const rawData = await fetch(RouteBases.api + Routes.user("@me"), {
       headers: { Authorization: `Bearer ${access_token}` }
