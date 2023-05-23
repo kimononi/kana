@@ -23,8 +23,19 @@ export async function vaildate(ctx: Context): Promise<Context> {
   const access_token = await ctx.cookies.get("access_token");
   const refresh_token = await ctx.cookies.get("refresh_token");
     
+  const unauthorized = {
+    code: Status.Unauthorized,
+    message: STATUS_TEXT[`${Status.Unauthorized}`]
+  };
+    
   if (!access_token || !refresh_token) {
-    ctx.response.redirect(redirectURI);
+    if (ctx.request.url.pathname === "/")
+      ctx.response.redirect(redirectURI);
+      else {
+      ctx.response.status = unauthorized.code;
+      ctx.response.body = unauthorized;
+      ctx.response.type = "json";
+    }
   } else {
     const rawData = await fetch(RouteBases.api + Routes.user("@me"), {
       headers: { Authorization: `Bearer ${access_token}` }
