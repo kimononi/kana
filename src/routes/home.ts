@@ -66,7 +66,11 @@ export async function authorize(ctx: Context): Promise<ValidateResult | void> {
     
       if ("error" in refreshData) 
         return;
-        else return validate(refreshData);
+        else {
+        ctx.cookies.set("access_token", refreshData.access_token);
+        ctx.cookies.set("refresh_token", refreshData.refresh_token);
+        return validate(refreshData);
+      }
     } else {
       return validate(data);
     }
