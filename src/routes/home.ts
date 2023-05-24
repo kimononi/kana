@@ -1,4 +1,4 @@
-import { Context, OAuth2Routes, OAuth2Scopes, RouteBases, Routes, Status, STATUS_TEXT } from "../deps.ts";
+import { APIUser, Context, OAuth2Routes, OAuth2Scopes, RouteBases, Routes, Status, STATUS_TEXT } from "../deps.ts";
 import * as routes from "./mod.ts";
 import config from "../config.json" assert { type: "json" };
 
@@ -7,10 +7,6 @@ export default {
   strict: true,
   method: "GET",
   async middleware(ctx: Context): Promise<void> {
-    console.log(ctx.request.ip);
-    ctx.response.body = "ga ada ap apd sini";
-    
-    return;
     const auth = await authorize(ctx);
     if (!auth) {
       const redirectURI = authorizeURL(ctx.request.url);
