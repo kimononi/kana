@@ -7,6 +7,7 @@ export default {
   strict: true,
   method: "GET",
   async middleware(ctx: Context): Promise<void> {
+    console.log(ctx.request.ip);
     const auth = await authorize(ctx);
     if (!auth) {
       const redirectURI = authorizeURL(ctx.request.url);
