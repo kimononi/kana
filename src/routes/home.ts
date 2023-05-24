@@ -8,6 +8,9 @@ export default {
   method: "GET",
   async middleware(ctx: Context): Promise<void> {
     console.log(ctx.request.ip);
+    ctx.response.body = "ga ada ap apd sini";
+    
+    return;
     const auth = await authorize(ctx);
     if (!auth) {
       const redirectURI = authorizeURL(ctx.request.url);
