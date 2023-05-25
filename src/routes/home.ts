@@ -9,8 +9,7 @@ export default {
   async middleware(ctx: Context): Promise<void> {
     const auth = await authorize(ctx);
     if (!auth) {
-      const redirectURI = authorizeURL(ctx.request.url);
-      ctx.response.redirect(redirectURI);
+      ctx.response.redirect(authorizeURL(ctx.request.url));
     } else {
       ctx.response.body = JSON.stringify(auth.valid 
         ? Object.values(routes).filter(route => !route.default.strict).map(route => ctx.request.url.origin + route.default.path)
