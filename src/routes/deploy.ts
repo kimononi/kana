@@ -10,8 +10,7 @@ export default {
     ctx.response.type = "json";
     const auth = await authorize(ctx);
     if (!auth) {
-      const redirectURI = authorizeURL(ctx.request.url);
-      ctx.response.redirect(redirectURI);
+      ctx.response.redirect(authorizeURL(ctx.request.url));
     } else if (!auth.valid) {
       ctx.response.body = auth.output;
     } else {
